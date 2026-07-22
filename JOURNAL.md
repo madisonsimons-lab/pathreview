@@ -9,37 +9,18 @@
 **Tier:** [x] Tier 1  [ ] Tier 2  [ ] Tier 3
 
 **Problem summary:**
-<!--
-TODO (YOU write this — it is graded and must be in YOUR OWN WORDS, 3–5 sentences.
-Do NOT paste the technical notes below verbatim; use them to understand the bug,
-then explain it yourself: what the issue is, what's currently broken, and what a
-successful fix accomplishes. Mentioning the affected part of the codebase helps.)
-
-Technical notes to understand it (reference only — not for submission):
-- Affected code: rag/evaluator/faithfulness_checker.py, the FaithfulnessChecker.check() method (lines ~34–36).
-- It builds context via `chunk.get("text", "") for chunk in context_chunks`, then `" ".join(...)`.
-- dict.get's default only applies when the key is ABSENT. If the key "text" exists
-  but its value is None, .get returns None — so a None reaches " ".join(...).
-- " ".join([...]) requires all items to be str, so a None item raises:
-  TypeError: sequence item 0: expected str instance, NoneType found.
-- A correct fix handles a None text value gracefully (e.g. treat it as "") so the
-  checker returns a score instead of crashing. The related regression test is
-  test_none_context_chunk_text in tests/unit/test_faithfulness_checker.py.
--->
+The faithfulness checker is designed to evaluate whether a generated response is supported by the provided context and return a faithfulness score. The issue occurs because chunk.get("text", "") returns None when the text key exists with a None value, causing " ".join(...) to raise a TypeError. As a result, the checker crashes instead of completing the evaluation. The fix is to treat None values as empty strings so the checker handles missing text gracefully and returns a score instead of an error.
 
 **Branch name:** fix/153-faithfulness-checker-none-crash
 
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
-**Cohort ledger:** [ ] Issue added to cohort ledger
-<!-- Check this box yourself AFTER you've added the row to your section's tab. -->
+**Cohort ledger:** [x] Issue added to cohort ledger
 
 ### "Is this right for me?" checklist — selection notes
-<!--
-TODO (YOU write this — graded). Work through the official "Is this right for me?"
-checklist (linked in the assignment resources) for issue #153 and note your scope
-reasoning here in your own words: why the scope fits a Tier-1 first contribution,
-which files you expect to touch, whether it has a clear reproduction and a testable
-outcome, and any risks/unknowns. I did not have the checklist link, so paste the
-actual checklist items and answer each one.
--->
+1. **Can I reproduce it reliably?** Yes, I can reproduce it reliably by running FaithfulnessChecker().check("Knows Python.", [{"text": None}]), which causes a TypeError.
+2. **Is the scope small and well-bounded?** Yes, the scope is small and likely only requires changes to two files.
+3. **Which files do I expect to change?** I expect to change rag/evaluator/faithfulness_checker.py and tests/unit/test_faithfulness_checker.py.
+4. **Is there a clear, testable success condition?** Yes, the success condition is that the checker handles None text values without crashing and returns a faithfulness score.
+5. **Does it fit my skill level (Tier 1)?** Yes, it is a good first contribution because it is a small bug fix with a clear cause, simple logic change, and an existing test case.
+6. **What are the risks/unknowns?** The main risk is that other parts of the code may expect text to always be a string, so the fix should avoid changing normal text processing behavior.
