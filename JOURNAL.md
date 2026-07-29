@@ -28,13 +28,14 @@ The faithfulness checker is designed to evaluate whether a generated response is
 ## Week 8 — Reproduction & solution planning
 
 **Reproduction commit link:**
+https://github.com/madisonsimons-lab/pathreview/commit/ccc67eaaf6c122103887fc4c24a86365e5378125
 
 
 **Reproduction summary:**
 I reproduced the issue by running FaithfulnessChecker().check("Knows Python.", [{"text": None}]), which caused the program to throw a TypeError. I also ran the failing unit test test_none_context_chunk_text, which confirmed the same error because the checker attempted to join a None value with strings.
 
 **PLAN.md link:**
-
+https://github.com/madisonsimons-lab/pathreview/blob/fix/153-faithfulness-checker-none-crash/PLAN.md
 
 **Walkthrough video (recommended):** N/A (optional, not graded)
 
