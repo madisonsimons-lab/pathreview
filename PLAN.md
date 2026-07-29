@@ -3,11 +3,7 @@
 **Issue:** Faithfulness checker crashes when a context chunk has `text: None` â€” https://github.com/ascherj/pathreview/issues/153
 
 ### Understand
-<!-- Root cause + expected vs. actual behavior, IN YOUR OWN WORDS (you can adapt your Week 7 summary). Prompts:
-- Root cause: why does dict.get("text", "") return None here instead of ""? (default only applies when the key is ABSENT)
-- Expected: what should check() do with a None/missing text?
-- Actual: what happens today? (TypeError at the " ".join(...) call) -->
-_YOUR ANSWER HERE_
+The issue occurs because chunk.get("text", "") returns None when the text key exists but its value is None; the default value is only used when the key is missing. The expected behavior is for check() to treat None or missing text as an empty string and continue evaluating the context. Instead, the method passes None to " ".join(...), causing a TypeError and preventing the faithfulness score from being returned.
 
 ### Map
 Files / functions involved (verified in the codebase):
@@ -24,14 +20,9 @@ Related code with the SAME `chunk.get("text", "")` pattern (decide if in scope â
 - `rag/generator/review_generator.py:157`
 
 ### Plan
-<!-- 3â€“5 concrete sub-tasks IN YOUR OWN WORDS. Prompts:
-1. What is the minimal code change? (coerce a None/missing text to "" before the join, e.g. `chunk.get("text") or ""`)
-2. How will you verify the fix? (run the failing test -> green; run the whole test file to check no regressions)
-3. Will you add any tests beyond the existing one? (e.g. multiple chunks where some are None)
-4. Will you address the sibling pattern in relevance_scorer.py / review_generator.py, or keep scope to faithfulness only? -->
-1. _YOUR ANSWER HERE_
-2. _YOUR ANSWER HERE_
-3. _YOUR ANSWER HERE_
+1. Update the check() method to replace None text values with an empty string before joining the context.
+2. Verify the fix by running the failing unit test and then the full test_faithfulness_checker.py file to ensure nothing else broke.
+3. Keep the scope focused on the faithfulness checker and confirm it correctly handles None, missing, and valid text values without crashing.
 
 ### Inputs & outputs
 - **Input:** `feedback: str` and `context_chunks: list[dict]`, where each chunk's `"text"` value may be a normal string, missing entirely, or `None`.
@@ -39,18 +30,7 @@ Related code with the SAME `chunk.get("text", "")` pattern (decide if in scope â
 - **Change:** after the fix, a chunk with `text: None` (or a missing `text` key) contributes an empty string to the concatenated context instead of raising a `TypeError`, so `check()` always returns a score.
 
 ### Risks & unknowns
-<!-- Specific risks tied to real files / investigation paths, IN YOUR OWN WORDS. Prompts:
-- Sibling bug: relevance_scorer.py:32 and review_generator.py:157 use the same get("text","") pattern and would also break on None. Is fixing only faithfulness enough, or inconsistent?
-- Upstream source of None: producers vector_store.py:106, hybrid.py:85, readme_parser.py:61 build {"text": ...}. Could coercing None -> "" mask a real upstream data bug worth reporting?
-- Does an empty context change scoring in a surprising way (e.g. _is_supported returns False for every claim -> score 0.0)? Is that acceptable? -->
-_YOUR ANSWER HERE_
+The main risk is that other files use the same get("text", "") pattern and may have the same issue. Another unknown is whether converting None to an empty string could hide an upstream data problem, but for this issue the goal is to prevent the checker from crashing.
 
 ### Edge cases
-<!-- Concrete inputs/states the fix should handle gracefully. Candidates to consider (keep the ones you'll actually cover):
-- chunk = {"text": None}            (the reported bug)
-- chunk = {}                        (missing "text" key â€” already handled, keep it working)
-- chunk = {"text": ""}              (empty string)
-- multiple chunks, some None + some valid
-- all chunks None -> empty context blob
-- non-string text (e.g. an int) -> decide whether that's in scope -->
-_YOUR ANSWER HERE_
+The fix should correctly handle a context chunk with {"text": None}, a missing text key, an empty string, multiple chunks containing both None and valid text, and a context where all chunks contain None without causing an error.
