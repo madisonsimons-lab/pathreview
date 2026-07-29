@@ -24,3 +24,24 @@ The faithfulness checker is designed to evaluate whether a generated response is
 4. **Is there a clear, testable success condition?** Yes, the success condition is that the checker handles None text values without crashing and returns a faithfulness score.
 5. **Does it fit my skill level (Tier 1)?** Yes, it is a good first contribution because it is a small bug fix with a clear cause, simple logic change, and an existing test case.
 6. **What are the risks/unknowns?** The main risk is that other parts of the code may expect text to always be a string, so the fix should avoid changing normal text processing behavior.
+
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:**
+<!-- The commit that adds this Week 8 note IS your reproduction commit. After you push, paste its GitHub URL, e.g.
+https://github.com/madisonsimons-lab/pathreview/commit/<sha> -->
+
+**Reproduction summary:**
+<!-- 1–2 sentences IN YOUR OWN WORDS: how you triggered it + what you observed. Facts verified locally:
+- Direct call: FaithfulnessChecker().check("Knows Python.", [{"text": None}])  -> raised TypeError
+- Pytest: tests/unit/test_faithfulness_checker.py::TestFaithfulnessChecker::test_none_context_chunk_text  -> FAILED
+- Error: "TypeError: sequence item 0: expected str instance, NoneType found" at faithfulness_checker.py:34 -->
+_YOUR ANSWER HERE_
+
+**PLAN.md link:**
+<!-- After you push, e.g. https://github.com/madisonsimons-lab/pathreview/blob/fix/153-faithfulness-checker-none-crash/PLAN.md -->
+
+**Walkthrough video (recommended):** N/A (optional, not graded)
+
+**Blockers or open questions:**
+<!-- Optional. Leave blank, or note anything uncertain for Week 9 (e.g. whether to also fix the same pattern in relevance_scorer.py / review_generator.py). -->
