@@ -47,18 +47,13 @@ None at this time. I plan to update the check() method to handle None values saf
 ### Check-in 1 (mid-week)
 
 **Current progress:**
-<!-- What have you implemented so far / which PLAN.md sub-tasks are done? Facts you can use:
-- Implemented the fix in rag/evaluator/faithfulness_checker.py: changed chunk.get("text", "") to chunk.get("text") or ""
-- The existing regression test test_none_context_chunk_text now passes (it failed before the fix)
-- Full unit suite: 52 failed / 376 passed (was 53/375 before) -> my change fixed 1 and added 0 new failures -->
-_YOUR ANSWER HERE_
+Implemented the fix in `rag/evaluator/faithfulness_checker.py` by changing the context handling logic so `None` text values are treated as empty strings instead of causing a crash. The existing regression test `test_none_context_chunk_text` now passes, and the change reduced the failing unit tests from 53 to 52 without introducing new failures.
 
 **Next steps:**
-<!-- What's left? e.g. open a draft PR, get peer/mentor feedback in Slack, fill the PR template, mark ready. -->
-_YOUR ANSWER HERE_
+Run the final checks, open a pull request, complete the PR template, and request peer or mentor feedback before marking the PR as ready for review.
 
 **Blockers:**
-<!-- Anything slowing you down, or leave blank. -->
+Catching up from the previous week and working through the testing and PR submission steps.
 
 ---
 
