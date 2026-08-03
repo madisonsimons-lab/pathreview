@@ -41,3 +41,42 @@ https://github.com/madisonsimons-lab/pathreview/blob/fix/153-faithfulness-checke
 
 **Blockers or open questions:**
 None at this time. I plan to update the check() method to handle None values safely and verify the fix with the existing unit test.
+
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+<!-- What have you implemented so far / which PLAN.md sub-tasks are done? Facts you can use:
+- Implemented the fix in rag/evaluator/faithfulness_checker.py: changed chunk.get("text", "") to chunk.get("text") or ""
+- The existing regression test test_none_context_chunk_text now passes (it failed before the fix)
+- Full unit suite: 52 failed / 376 passed (was 53/375 before) -> my change fixed 1 and added 0 new failures -->
+_YOUR ANSWER HERE_
+
+**Next steps:**
+<!-- What's left? e.g. open a draft PR, get peer/mentor feedback in Slack, fill the PR template, mark ready. -->
+_YOUR ANSWER HERE_
+
+**Blockers:**
+<!-- Anything slowing you down, or leave blank. -->
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** <!-- paste after you open the PR, e.g. https://github.com/ascherj/pathreview/pull/<n> -->
+
+**Branch:** `fix/153-faithfulness-checker-none-crash`
+
+**What you built:**
+<!-- 1–3 sentences IN YOUR OWN WORDS: what the fix does + how it works. (You changed the context concatenation so a chunk whose "text" is None is treated as "" instead of crashing " ".join().) -->
+_YOUR ANSWER HERE_
+
+**Tests added or updated:**
+<!-- Which tests cover this? The regression test tests/unit/test_faithfulness_checker.py::test_none_context_chunk_text (and test_missing_text_key_in_chunk) now pass with the fix — they cover the None-value and missing-key cases. Describe in your own words. -->
+_YOUR ANSWER HERE_
+
+**Self-review confirmation:** [ ] make check passes  [ ] make test-unit passes
+<!-- NOTE: the repo has documented PRE-EXISTING failures (52 unit-test failures + file-wide lint/format issues) unrelated to #153. Per the assignment, "passes" here means your change introduces NO NEW failures — which is verified: the fix file passes ruff/black/mypy, and the suite went 53->52 failures (your fix removed 1, added 0). Check the boxes once you've re-run both commands yourself. -->
+
+**Draft PR feedback received from:** <!-- name or Slack handle, or "none" -->
