@@ -72,3 +72,34 @@ I verified the existing regression tests `test_none_context_chunk_text` and `tes
 **Self-review confirmation:** [x] make check passes  [x] make test-unit passes
 
 **Draft PR feedback received from:** Mackenzie Simons
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No maintainer/reviewer feedback came in — per the Summer 2026 course note, reviewer feedback on submitted PRs is not provided this term. (I did receive peer feedback on my draft PR from Mackenzie Simons during Week 9.)
+
+**How you responded:**
+N/A — no reviewer feedback to respond to.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Getting the project running locally was harder than I expected because I ran into environment issues and accidentally worked in the wrong project folder at first. Once I found the correct repository and environment, it was much easier to reproduce and fix the bug.
+
+**What did you learn about working in a large codebase?**
+I learned that not every failing test is related to the issue I'm fixing. It was important to keep my change focused on one file and make sure I didn't introduce any new problems instead of trying to fix unrelated issues.
+
+**How did AI tools help — and where did they fall short?**
+AI helped me understand the root cause of the bug, trace where the error came from, and explain why the fix worked. I still had to verify the code, decide what changes were appropriate, and make sure my work matched the project's requirements.
+
+**What would you do differently if you started over?**
+I would set up my development environment earlier and make sure I was working in the correct project directory before starting. That would have saved time and avoided confusion.
+
+**What are you most proud of from this module?**
+I'm most proud of successfully identifying the cause of the bug and implementing a fix that prevents the faithfulness checker from crashing when a context chunk contains `None`.
