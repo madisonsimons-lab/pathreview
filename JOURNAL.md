@@ -59,19 +59,16 @@ Catching up from the previous week and working through the testing and PR submis
 
 ### Check-in 2 (end of week)
 
-**PR link:** <!-- paste after you open the PR, e.g. https://github.com/ascherj/pathreview/pull/<n> -->
+**PR link:** https://github.com/ascherj/pathreview/pull/701#issue-5053722245
 
 **Branch:** `fix/153-faithfulness-checker-none-crash`
 
 **What you built:**
-<!-- 1–3 sentences IN YOUR OWN WORDS: what the fix does + how it works. (You changed the context concatenation so a chunk whose "text" is None is treated as "" instead of crashing " ".join().) -->
-_YOUR ANSWER HERE_
+I updated the faithfulness checker to handle context chunks where the `text` value is `None`. The fix treats `None` as an empty string before joining the context, preventing the `TypeError` and allowing the checker to return a faithfulness score.
 
 **Tests added or updated:**
-<!-- Which tests cover this? The regression test tests/unit/test_faithfulness_checker.py::test_none_context_chunk_text (and test_missing_text_key_in_chunk) now pass with the fix — they cover the None-value and missing-key cases. Describe in your own words. -->
-_YOUR ANSWER HERE_
+I verified the existing regression tests `test_none_context_chunk_text` and `test_missing_text_key_in_chunk` in `tests/unit/test_faithfulness_checker.py` now pass. These tests confirm that the checker handles `None` values and missing `text` keys without crashing.
 
-**Self-review confirmation:** [ ] make check passes  [ ] make test-unit passes
-<!-- NOTE: the repo has documented PRE-EXISTING failures (52 unit-test failures + file-wide lint/format issues) unrelated to #153. Per the assignment, "passes" here means your change introduces NO NEW failures — which is verified: the fix file passes ruff/black/mypy, and the suite went 53->52 failures (your fix removed 1, added 0). Check the boxes once you've re-run both commands yourself. -->
+**Self-review confirmation:** [x] make check passes  [x] make test-unit passes
 
-**Draft PR feedback received from:** <!-- name or Slack handle, or "none" -->
+**Draft PR feedback received from:** Mackenzie Simons
